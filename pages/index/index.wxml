@@ -1,0 +1,29 @@
+<!-- index.wxml -->
+<view style="height:100%">
+  <map id="qqMap" longitude="{{map.longitude}}" latitude="{{map.latitude}}" 
+  style='width:{{map.width}};height:{{map.height}};' scale='18' markers='{{markers}}' bindregionchange='bindregionchange'>
+    <cover-image src="../../images/here.gif" style=" position:absolute;width:64px;height:64px;padding-left:calc(50% - 10px);padding-top:{{map.penHeight}}"/>
+  </map>
+  <button class='mark-btn' bindtap='showMark'>标记美食</button>
+  <view class='mark-form' wx:if="{{ifShowMark}}">
+    <view class='row-item'>
+      <image class="m-form-icon" src="../../images/restaurant-icon.png"></image>
+      <input class="normal-ipt" type="text" name="shopName" placeholder='店名' />
+    </view>
+    <view class='row-item'>
+      <image class="m-form-icon" src="../../images/price-icon.png"></image>
+      <input class="normal-ipt" type="text" name="category" placeholder='美食类型' />
+    </view>
+    <view class='row-item'>
+      <image class="m-form-icon" src="../../images/price-icon.png"></image>
+      <input class="normal-ipt" type="text" name="cost" placeholder='人均价格' />
+    </view>
+    <view class='row-item'>
+      <textarea class="normal-textarea" placeholder="备注"></textarea>
+    </view>
+    <view>
+      <button class="mark-btn-cancel" bindtap="showMark">取消</button>
+      <button class="mark-btn-ok" bindtap="addMarker">标记</button>
+    </view>
+  </view>
+</view>

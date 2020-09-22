@@ -1,0 +1,13 @@
+<view class="diglog-content">
+    <input class="diglog-button" id="shop-name" value="" placeholder="店名" />
+    <input class="diglog-button" id="food-name" value="" placeholder="食物名称" />
+    <input class="diglog-button" id="food-price" value="" placeholder="人均价格" />
+    <label>标记</label>
+    <radio-group class="radio-group" bindchange="radioChange">
+        <label class="radio" wx:for="{{items}}">
+            <radio value="{{item.name}}" checked="{{item.checked}}" />
+            {{item.value}}
+        </label>
+    </radio-group>
+    <button bindtap="back">返回</button>
+</view>

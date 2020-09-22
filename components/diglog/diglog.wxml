@@ -1,0 +1,21 @@
+<view class="wx-diglog" hidden="{{flag}}">
+    <view class='diglog-container'>
+        <view class="wx-diglog-title">{{title}}</view>
+        <view class="diglog-content">
+            <input class="diglog-button" id="shop-name" value="" placeholder="店名" />
+            <input class="diglog-button" id="food-name" value="" placeholder="食物名称" />
+            <input class="diglog-button" id="food-price" value="" placeholder="人均价格" />
+            <label>标记</label>
+            <radio-group class="radio-group" bindchange="radioChange">
+                <label class="radio" wx:for="{{items}}">
+                    <radio value="{{item.name}}" checked="{{item.checked}}" />
+                    {{item.value}}
+                </label>
+            </radio-group>
+        </view>
+        <view class="wx-diglog-btn">
+            <text class="btn-no" bindtap='_error'>{{btn_no}}</text>
+            <text class="btn-ok" bindtap='_success'>{{btn_ok}}</text>
+        </view>
+    </view>
+</view>
