@@ -8,18 +8,18 @@
   <view class='mark-form' wx:if="{{ifShowMark}}">
     <view class='row-item'>
       <image class="m-form-icon" src="../../images/restaurant-icon.png"></image>
-      <input class="normal-ipt" type="text" name="shopName" placeholder='店名' />
+      <input class="normal-ipt" type="text" name="shopName" bindinput="getShopName" placeholder='店名' />
     </view>
     <view class='row-item'>
       <image class="m-form-icon" src="../../images/price-icon.png"></image>
-      <input class="normal-ipt" type="text" name="category" placeholder='美食类型' />
+      <input class="normal-ipt" type="text" name="category" bindinput="getCategory" placeholder='美食类型' />
     </view>
     <view class='row-item'>
       <image class="m-form-icon" src="../../images/price-icon.png"></image>
-      <input class="normal-ipt" type="text" name="cost" placeholder='人均价格' />
+      <input class="normal-ipt" type="text" name="cost" bindinput="getCost" placeholder='人均价格' />
     </view>
     <view class='row-item'>
-      <textarea class="normal-textarea" placeholder="备注"></textarea>
+      <textarea class="normal-textarea" placeholder="备注" bindinput="getRemark"></textarea>
     </view>
     <view>
       <button class="mark-btn-cancel" bindtap="showMark">取消</button>

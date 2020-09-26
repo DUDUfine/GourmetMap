@@ -18,7 +18,11 @@ Page({
       longitude: "",
       latitude: ""
     },
-    ifShowMark: false
+    ifShowMark: false,
+    shopName: '',
+    category: '',
+    cost: '',
+    remark: ''
   },
   //事件处理函数
   bindViewTap: function () {
@@ -26,19 +30,49 @@ Page({
       url: '../logs/logs'
     })
   },
+  savemark(longitude, latitude) {
+    console.log('请求前');
+    wx.request({
+      url: 'http://dudufine.com:3000/v1/mark/add',
+      method: 'POST',
+      data: {
+        shopName: this.data.shopName,
+        category: this.data.category,
+        cost: this.data.cost,
+        remark: this.data.remark,
+        longitude: longitude, 
+        latitude: latitude
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log('请求成功：'+JSON.stringify(res)); 
+      },
+      fail: function(res) {
+        console.log('请求失败：'+JSON.stringify(res));
+      },
+    })
+    console.log('请求后');
+  },
   addMarker: function (longitude, latitude) {
+    var _this = this;
+    console.log('店名：'+_this.data.shopName+'；美食类型：'+_this.data.category+'；人均价格：'+_this.data.cost);
     if (longitude && latitude) {
       this.addOneMark(longitude, latitude)
+      this.savemark(longitude, latitude)
     }
     else {
-      var _this = this;
+      console.log('getCenterLocation');
       this.mapcontext.getCenterLocation({
         success: function (res) {
           _this.addOneMark(res.longitude, res.latitude)
+          _this.savemark(res.longitude, res.latitude)
         }
       });
     }
   },
+  // 地图标记
   addOneMark: function (longitude, latitude) {
     var _this = this;
     _this.data.maxMarkerIndex++;
@@ -66,7 +100,7 @@ Page({
         //记录标记点
         _this.data.curRemark.longitude = res.longitude;
         _this.data.curRemark.latitude = res.latitude;
-        //修改地图大小
+        //修改地图大小，解决地图全屏弹出层不能显示
         if (ifShowMark) {
           _this.data.map.height = "calc(100% - 393px)";
         }
@@ -88,8 +122,33 @@ Page({
     });
   },
   //标记地图
-  mark: function () {
-    addMarker()
+  // mark: function () {
+  //   addMarker()
+  // },
+  getShopName(e) {
+    console.log('店名：'+ JSON.stringify(e.detail) );
+    var _this = this;
+    _this.setData({
+      shopName: e.detail.value
+    })
+  },
+  getCategory(e) {
+    var _this = this;
+    _this.setData({
+      category: e.detail.value
+    })
+  },
+  getCost(e) {
+    var _this = this;
+    _this.setData({
+      cost: e.detail.value
+    })
+  },
+  getRemark(e) {
+    var _this = this;
+    _this.setData({
+      remark: e.detail.value
+    })
   },
   bindregionchange: function () {
     var _this = this;
