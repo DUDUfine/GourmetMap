@@ -8,7 +8,7 @@ Page({
     map: {
       longitude: '0',
       latitude: '0',
-      height: "calc(100% - 66px)",
+      height: "calc(100% - 106px)",
       width: '100%',
       penHeight: "64px"
     },
@@ -22,7 +22,8 @@ Page({
     shopName: '',
     category: '',
     cost: '',
-    remark: ''
+    remark: '',
+    activeTab: 'MARK' // 'MARK'——标记；'LIST'——列表；'SHARE'——分享；'MINE'——我的
   },
   //事件处理函数
   bindViewTap: function () {
@@ -32,6 +33,7 @@ Page({
   },
   savemark(longitude, latitude) {
     console.log('请求前');
+    var _this = this;
     wx.request({
       url: 'http://dudufine.com:3000/v1/mark/add',
       method: 'POST',
@@ -48,6 +50,10 @@ Page({
       },
       success: function(res) {
         console.log('请求成功：'+JSON.stringify(res)); 
+        _this.data.ifShowMark = false
+        // wx.navigateTo({
+        //   url: 'pages/list/list'　　// 跳到列表页
+        // })
       },
       fail: function(res) {
         console.log('请求失败：'+JSON.stringify(res));

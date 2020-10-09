@@ -1,0 +1,9 @@
+<!--components/listItem/listItem.wxml-->
+<view>
+   <div class="list-item">
+    <div>谭鸭血火锅 <span> 500m </span></div>
+    <div>***** <span>¥80/人</span></div> 
+    <div>记录：这家的鸭血和肥牛很喜欢，但是牙签郡肝不好吃</div> 
+  </div>
+</view>
+

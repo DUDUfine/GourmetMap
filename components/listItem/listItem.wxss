@@ -1,0 +1,6 @@
+/* components/listItem/listItem.wxss */
+.list-item {
+  font-size: 12px;
+  margin: 10px;
+  box-sizing: border-box;
+}

@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/food_mark/food_mark"
+    "pages/food_mark/food_mark",
+    "pages/list/list"
   ],
   "window": {
     "backgroundTextStyle": "light",

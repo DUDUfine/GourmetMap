@@ -1,0 +1,9 @@
+<!--components/navigation/navigation.wxml-->
+<view class="navigation"> 
+  <span class="iconfont icon-shoucang {{activeTab=='MARK'? 'active' : ''}}" >标记</span>
+  <navigator url="../../pages/list/list">
+    <span class="iconfont icon-liebiao {{activeTab=='LIST'? 'active' : ''}}" >列表</span>
+  </navigator>
+  <span class="iconfont icon-wode {{activeTab=='SHARE'? 'active' : ''}}">共享</span>
+  <span class="iconfont icon-B {{activeTab=='MINE'? 'active' : ''}}">我的</span>
+</view>

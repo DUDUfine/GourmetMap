@@ -1,0 +1,7 @@
+/* pages/list/list.wxss */
+.list {
+  background-color: #ccc;
+  margin: 10px;
+  height: 100%;
+  width: 100%;
+}

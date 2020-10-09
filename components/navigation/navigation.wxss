@@ -1,0 +1,19 @@
+/* components/navigation/navigation.wxss */
+@import "/access/css/iconfont.wxss";
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  /* z-index: 2; */
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  /* border-top: 1px solid #ccc; */
+}
+
+.iconfont {
+  line-height: 40px;
+}
+.active {
+  color: #fbc422
+}
