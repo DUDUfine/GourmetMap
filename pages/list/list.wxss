@@ -1,7 +1,26 @@
 /* pages/list/list.wxss */
 .list {
-  background-color: #ccc;
-  margin: 10px;
+  background-color: #e7e7e7;
+  padding: 10px;
+  margin-top: 10px;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
+}
+.search input {
+  border: 1rpx solid #e3e3e3;
+  width: 700rpx;
+  height: 66rpx;
+  border-radius: 30rpx;
+  box-sizing: border-box;
+  padding: 0 10px;
+  margin: 0 10px;
+  font-size: 12px;
+}
+.search image {
+  width: 35rpx;
+  height: 35rpx;
+  position: absolute;
+  top: 16rpx;
+  right: 42rpx;
 }

@@ -11,6 +11,35 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },
+  "tabBar": {
+    "color": "#7070707",
+    "selectedColor": "#fbc422",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "标记",
+        "iconPath": "images/mark-off.png",
+        "selectedIconPath": "images/mark-on.png"
+      },{
+      "pagePath": "pages/list/list",
+      "text": "列表",
+      "iconPath": "images/list-off.png",
+      "selectedIconPath": "images/list-on.png"
+    },{
+      "pagePath": "pages/list/list",
+      "text": "分享",
+      "iconPath": "images/share-off.png",
+      "selectedIconPath": "images/share-on.png"
+    },
+    {
+      "pagePath": "pages/list/list",
+      "text": "我的",
+      "iconPath": "images/mine-off.png",
+      "selectedIconPath": "images/mine-on.png"
+    }]
+  },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "diglog": "components/diglog/diglog"

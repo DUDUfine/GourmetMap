@@ -6,7 +6,7 @@
   </map>
   
   <button class='mark-btn' bindtap='showMark'>标记美食</button>
-  <navigation activeTab="{{activeTab}}"></navigation>
+  <!-- <navigation activeTab="{{activeTab}}"></navigation> -->
   <view class='mark-form' wx:if="{{ifShowMark}}">
     <view class='row-item'>
       <image class="m-form-icon" src="../../images/restaurant-icon.png"></image>

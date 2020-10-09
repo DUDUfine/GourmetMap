@@ -5,9 +5,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    keyword: '', // 搜索关键词
+    markList: [] // 标记列表
   },
-
+  // 获取个人标记列表
+  getMarkList() {
+    var _this = this;
+    wx.request({
+      url: 'http://dudufine.com:3000/v1/mark/list', 
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success (res) {
+        console.log(res.data)
+        this.markList = res.data
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

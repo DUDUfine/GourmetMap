@@ -8,7 +8,7 @@ Page({
     map: {
       longitude: '0',
       latitude: '0',
-      height: "calc(100% - 106px)",
+      height: "calc(100% - 66px)",
       width: '100%',
       penHeight: "64px"
     },
@@ -22,8 +22,8 @@ Page({
     shopName: '',
     category: '',
     cost: '',
-    remark: '',
-    activeTab: 'MARK' // 'MARK'——标记；'LIST'——列表；'SHARE'——分享；'MINE'——我的
+    remark: ''
+    // activeTab: 'MARK' // 'MARK'——标记；'LIST'——列表；'SHARE'——分享；'MINE'——我的
   },
   //事件处理函数
   bindViewTap: function () {
@@ -158,8 +158,6 @@ Page({
   },
   bindregionchange: function () {
     var _this = this;
-    
-    return;
     if (this.mapcontext) {
       this.mapcontext.getCenterLocation({
         success: function (res) {

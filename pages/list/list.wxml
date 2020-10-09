@@ -1,9 +1,22 @@
 <!--pages/list/list.wxml-->
 
 <view>
-  <div class="list">
-    <listItem></listItem>
-  </div>
+  <view class="search">
+    <input class="search-ipt" type="text" placeholder="请输入搜索关键词" value="{{keyword}}" />
+    <image src="/images/icon/search.svg"></image>
+  </view>
+  <view class="list">
+    <scroll-view>
+      <block >
+          <listItem></listItem>
+          <listItem></listItem>
+          <listItem></listItem> 
+          <listItem></listItem>
+          <listItem></listItem> 
+          <listItem></listItem>
+      </block>
+    </scroll-view>
+  </view>
   <!-- <div>
     <div>谭鸭血火锅 <span> 500m </span></div>
     <div>***** <span>¥80/人</span></div> 
