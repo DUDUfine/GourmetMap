@@ -192,7 +192,7 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
-        _this.mapcontext = wx.createMapContext("qqMap", _this);
+        _this.mapcontext = wx.createMapContext("qqMap");
 
         if (res && res.longitude) {
           record.get(function (markers) {
