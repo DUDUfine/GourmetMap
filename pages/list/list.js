@@ -13,12 +13,16 @@ Page({
     var _this = this;
     wx.request({
       url: 'http://dudufine.com:3000/v1/mark/list', 
+      data: {
+        pageSize: 0,
+        pageIndex: 10
+      },
       header: {
         'content-type': 'application/json' // 默认值
       },
       success (res) {
-        console.log(res.data)
-        this.markList = res.data
+        _this.markList = res.data
+        console.log(res.data); 
       }
     })
   },
