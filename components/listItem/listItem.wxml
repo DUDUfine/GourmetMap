@@ -1,10 +1,10 @@
 <!--components/listItem/listItem.wxml-->
 
 <view class="list-item">
-  <view>谭鸭血火锅 <span> 500m </span> <span class="tag">火锅</span></view>
+  <view>{{itemData.shopName}} <span> 500m </span> <span class="tag">{{itemData.category}}</span></view>
   <image class="edit-btn" src="/images/icon/edit.png"></image>
-  <view>***** <span>¥80/人</span></view> 
-  <view>记录：这家的鸭血和肥牛很喜欢，但是牙签郡肝不好吃</view> 
+  <view>***** <span>¥{{itemData.cost}}/人</span></view> 
+  <view>记录：<span>{{itemData.remark}}</span></view> 
 </view>
 
 

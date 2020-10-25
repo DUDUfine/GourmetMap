@@ -8,13 +8,11 @@
   <view class="list">
     <scroll-view>
       <block >
-          <listItem></listItem>
-          <listItem></listItem>
-          <listItem></listItem> 
-          <listItem></listItem>
-          <listItem></listItem> 
-          <listItem></listItem>
+          <listItem  itemData="{{markItem}}" wx:for="{{markList}}" wx:for-item="markItem" wx:key="id"></listItem>
+          <view wx:if="{{isFinish}}">已经到底部了～</view>  
+        <view wx:else>下拉加载～</view>   
       </block>
+      
     </scroll-view>
   </view>
   <!-- <div>

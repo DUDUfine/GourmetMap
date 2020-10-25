@@ -1,3 +1,4 @@
 {
-  "usingComponents": {"listItem": "../../components/listItem/listItem"}
+  "usingComponents": {"listItem": "../../components/listItem/listItem"},
+  "enablePullDownRefresh": true
 }
