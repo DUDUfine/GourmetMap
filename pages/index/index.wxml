@@ -13,7 +13,7 @@
       <input class="normal-ipt" type="text" name="shopName" bindinput="getShopName" placeholder='店名' />
     </view>
     <view class='row-item'>
-      <image class="m-form-icon" src="../../images/price-icon.png"></image>
+      <image class="m-form-icon" src="../../images/category-icon.png"></image>
       <input class="normal-ipt" type="text" name="category" bindinput="getCategory" placeholder='美食类型' />
     </view>
     <view class='row-item'>

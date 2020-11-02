@@ -50,10 +50,24 @@ Page({
       },
       success: function(res) {
         console.log('请求成功：'+JSON.stringify(res)); 
-        _this.data.ifShowMark = false
         // wx.navigateTo({
         //   url: 'pages/list/list'　　// 跳到列表页
         // })
+        
+        // 收起弹出层显示输入框
+        _this.data.ifShowMark =false;
+        //修改地图大小，解决地图全屏弹出层不能显示
+        if (_this.data.ifShowMark) {
+          _this.data.map.height = "calc(100% - 393px)";
+        }
+        else {
+          _this.data.map.height = "calc(100% - 66px)";
+        }
+        _this.setData({
+          map: _this.data.map,
+          ifShowMark: _this.data.ifShowMark
+        });
+        _this.getMapHeight();
       },
       fail: function(res) {
         console.log('请求失败：'+JSON.stringify(res));
