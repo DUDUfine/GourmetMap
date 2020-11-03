@@ -13,7 +13,7 @@ Page({
       penHeight: "64px",
       markers: [],
     },
-    markers: [],
+    // markers: [],
     maxMarkerIndex: 2,
     curRemark: {
       longitude: "",
@@ -68,10 +68,26 @@ Page({
           map: _this.data.map,
           ifShowMark: _this.data.ifShowMark
         });
-        _this.getMapHeight();
+        // _this.getMapHeight();
+
+        wx.showToast({
+          title:"成功",
+          icon: 'loading...',//图标，支持"success"、"loading" 
+          // image: '/images/tan.png',//自定义图标的本地路径，image 的优先级高于 icon
+          duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+          mask: false,//是否显示透明蒙层，防止触摸穿透，默认：false 
+          success:function(){},
+          fail:function(){},
+          complete:function(){}
+        })
       },
       fail: function(res) {
         console.log('请求失败：'+JSON.stringify(res));
+        wx.showToast({
+          title:"成功",
+          icon: 'success',//图标，支持"success"、"loading" 
+          duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+        })
       },
     })
   },
@@ -216,13 +232,12 @@ Page({
         if(!data){
           return;
         }
-        _this.data.markList.push(...data) ;
-        _this.data.isFinish = data.length==0
-       
-        _this.setData({
-          markList: _this.data.markList,
-          isFinish: _this.data.isFinish
-        });
+        _this.data.map.markers.push(...data) ;
+      
+        // _this.setData({
+        //   markList: _this.data.markList,
+        //   isFinish: _this.data.isFinish
+        // });
       }
     })
   },
@@ -243,18 +258,20 @@ Page({
             _this.data.map.latitude = res.latitude;
               //当前位置
             let tempMarkers = {
-                id: 0,
-                longitude: res.longitude,
-                latitude: res.latitude,
-                iconPath: '/images/navi_s.png',
-                width: 32,
-                height: 32
-              };
-              _this.data.map.markers.push(tempMarkers)
+              id: 0,
+              longitude: res.longitude,
+              latitude: res.latitude,
+              iconPath: '/images/navi_s.png',
+              width: 32,
+              height: 32
+            };
+            _this.data.map.markers.push(tempMarkers)
             _this.setData({
               map: _this.data.map,
               // markers: markers
             });
+
+            _this.getMarkList()
           // });
         }
       }
