@@ -2,15 +2,16 @@
 //获取应用实例
 const app = getApp()
 //引入数据持久化js
-var record = require('../../utils/record.js');
+// var record = require('../../utils/record.js');
 Page({
   data: {
     map: {
-      longitude: '0',
-      latitude: '0',
+      longitude: 0,
+      latitude: 0,
       height: "calc(100% - 66px)",
       width: '100%',
-      penHeight: "64px"
+      penHeight: "64px",
+      markers: [],
     },
     markers: [],
     maxMarkerIndex: 2,
@@ -73,7 +74,6 @@ Page({
         console.log('请求失败：'+JSON.stringify(res));
       },
     })
-    console.log('请求后');
   },
   addMarker: function (longitude, latitude) {
     var _this = this;
@@ -83,7 +83,6 @@ Page({
       this.savemark(longitude, latitude)
     }
     else {
-      console.log('getCenterLocation');
       this.mapcontext.getCenterLocation({
         success: function (res) {
           _this.addOneMark(res.longitude, res.latitude)
@@ -107,7 +106,7 @@ Page({
     _this.setData({
       markers: _this.data.markers
     });
-    record.save(_this.data.markers);
+    // record.save(_this.data.markers);
   },
   //打开/关闭标记输入框
   showMark: function () {
@@ -200,6 +199,33 @@ Page({
       console.log(res.height / 2);
     }).exec();
   },
+  // 获取个人标记列表
+  getMarkList() {
+    var _this = this;
+    wx.request({
+      url: 'http://dudufine.com:3000/v1/mark/list', 
+      data: {
+        pageSize: 10,
+        pageIndex: 0
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success (res) {
+        let data = res.data.result.data;
+        if(!data){
+          return;
+        }
+        _this.data.markList.push(...data) ;
+        _this.data.isFinish = data.length==0
+       
+        _this.setData({
+          markList: _this.data.markList,
+          isFinish: _this.data.isFinish
+        });
+      }
+    })
+  },
   onLoad: function () {
     var _this = this;
     this.selectQuery = wx.createSelectorQuery()
@@ -209,14 +235,14 @@ Page({
         _this.mapcontext = wx.createMapContext("qqMap");
 
         if (res && res.longitude) {
-          record.get(function (markers) {
-            if (!markers) {
-              markers = []
-            }
+          // record.get(function (markers) {
+          //   if (!markers) {
+          //     markers = []
+          //   }
             _this.data.map.longitude = res.longitude;
-            _this.data.map.latitude = res.latitude,
+            _this.data.map.latitude = res.latitude;
               //当前位置
-              markers[0] = {
+            let tempMarkers = {
                 id: 0,
                 longitude: res.longitude,
                 latitude: res.latitude,
@@ -224,20 +250,12 @@ Page({
                 width: 32,
                 height: 32
               };
-            //地图中心位置初始化
-            // markers[1] = {
-            //   id: 1,
-            //   longitude: res.longitude,
-            //   latitude: res.latitude,
-            //   iconPath: '/images/here.png',
-            //   width: 32,
-            //   height: 32
-            // };
+              _this.data.map.markers.push(tempMarkers)
             _this.setData({
               map: _this.data.map,
-              markers: markers
+              // markers: markers
             });
-          });
+          // });
         }
       }
     })
