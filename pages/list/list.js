@@ -8,7 +8,8 @@ Page({
     keyword: '', // 搜索关键词
     markList: [], // 标记列表
     pageIndex:0,
-    isFinish: false
+    isFinish: false,
+    pageSize: 10
   },
   // 获取个人标记列表
   getMarkList() {
@@ -16,7 +17,7 @@ Page({
     wx.request({
       url: 'http://dudufine.com:3000/v1/mark/list', 
       data: {
-        pageSize: 10,
+        pageSize: _this.data.pageSize,
         pageIndex: _this.data.pageIndex
       },
       header: {
@@ -28,7 +29,7 @@ Page({
           return;
         }
         _this.data.markList.push(...data) ;
-        _this.data.isFinish = data.length==0
+        _this.data.isFinish = data.length == 0 || data.length < _this.data.pageSize;
        
         _this.setData({
           markList: _this.data.markList,

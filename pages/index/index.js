@@ -233,7 +233,10 @@ Page({
           return;
         }
         _this.data.map.markers.push(...data) ;
-      
+        console.log(_this.data.map.markers);
+        _this.setData({
+          markers: _this.data.map.markers
+        });
         // _this.setData({
         //   markList: _this.data.markList,
         //   isFinish: _this.data.isFinish
