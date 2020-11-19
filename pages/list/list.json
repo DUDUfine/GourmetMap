@@ -1,4 +1,5 @@
 {
   "usingComponents": {"listItem": "../../components/listItem/listItem"},
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
 }

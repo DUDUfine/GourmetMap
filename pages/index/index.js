@@ -1,8 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-//引入数据持久化js
-// var record = require('../../utils/record.js');
+var http = require('../../http/http.js');
 Page({
   data: {
     map: {
@@ -218,17 +217,15 @@ Page({
   // 获取个人标记列表
   getMarkList() {
     var _this = this;
-    wx.request({
-      url: 'http://dudufine.com:3000/v1/mark/list', 
-      data: {
-        pageSize: 10,
-        pageIndex: 0
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success (res) {
-        let data = res.data.result.data;
+    // http.getRequest('/v1/mark/list', {
+    //   pageSize: 10,
+    //   pageIndex: 0
+    // },)
+    http.getRequest('/v1/mark/list', {
+      pageSize: 10,
+      pageIndex: 0
+    }, 'GET').then((res) => {
+      let data = res.data.result.data;
         if(!data){
           return;
         }
@@ -237,12 +234,31 @@ Page({
         _this.setData({
           markers: _this.data.map.markers
         });
-        // _this.setData({
-        //   markList: _this.data.markList,
-        //   isFinish: _this.data.isFinish
-        // });
-      }
+    }, (res) => {
+
     })
+    // wx.request({
+    //   url: 'http://dudufine.com:3000/v1/mark/list', 
+    //   data: {
+    //     pageSize: 10,
+    //     pageIndex: 0
+    //   },
+    //   success (res) {
+    //     let data = res.data.result.data;
+    //     if(!data){
+    //       return;
+    //     }
+    //     _this.data.map.markers.push(...data) ;
+    //     console.log(_this.data.map.markers);
+    //     _this.setData({
+    //       markers: _this.data.map.markers
+    //     });
+    //     // _this.setData({
+    //     //   markList: _this.data.markList,
+    //     //   isFinish: _this.data.isFinish
+    //     // });
+    //   }
+    // })
   },
   onLoad: function () {
     var _this = this;

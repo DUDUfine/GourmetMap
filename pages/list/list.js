@@ -1,6 +1,7 @@
 // pages/list/list.js
-Page({
+var http = require('../../http/http.js');
 
+Page({
   /**
    * 页面的初始数据
    */
@@ -14,29 +15,46 @@ Page({
   // 获取个人标记列表
   getMarkList() {
     var _this = this;
-    wx.request({
-      url: 'http://dudufine.com:3000/v1/mark/list', 
-      data: {
-        pageSize: _this.data.pageSize,
-        pageIndex: _this.data.pageIndex
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success (res) {
-        let data = res.data.result.data;
-        if(!data){
-          return;
-        }
-        _this.data.markList.push(...data) ;
-        _this.data.isFinish = data.length == 0 || data.length < _this.data.pageSize;
-       
-        _this.setData({
-          markList: _this.data.markList,
-          isFinish: _this.data.isFinish
-        });
+    http.getRequest('/v1/mark/list', {
+      pageSize: _this.data.pageSize,
+      pageIndex: _this.data.pageIndex
+    }, 'GET').then((res) => {
+      debugger
+      let data = res.data;
+      if(!data){
+        return;
       }
-    })
+      _this.data.markList.push(...data) ;
+      _this.data.isFinish = data.length == 0 || data.length < _this.data.pageSize;
+      
+      _this.setData({
+        markList: _this.data.markList,
+        isFinish: _this.data.isFinish
+      });
+    },() => {})
+    // wx.request({
+    //   url: 'http://dudufine.com:3000/v1/mark/list', 
+    //   data: {
+    //     pageSize: _this.data.pageSize,
+    //     pageIndex: _this.data.pageIndex
+    //   },
+    //   header: {
+    //     'content-type': 'application/json' // 默认值
+    //   },
+    //   success (res) {
+    //     let data = res.data.result.data;
+    //     if(!data){
+    //       return;
+    //     }
+    //     _this.data.markList.push(...data) ;
+    //     _this.data.isFinish = data.length == 0 || data.length < _this.data.pageSize;
+       
+    //     _this.setData({
+    //       markList: _this.data.markList,
+    //       isFinish: _this.data.isFinish
+    //     });
+    //   }
+    // })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -88,7 +106,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let _this = this;
+    // _this.setData({
+    //   pageIndex: _this.data.pageIndex+1,
+    // });
+    _this.data.pageIndex=0;
+    this.getMarkList();
   },
 
 
