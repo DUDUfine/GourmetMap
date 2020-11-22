@@ -19,13 +19,12 @@ function postRequest(url, params, onSuccess, onFailed, onComplete) {
  * @param {Function} onFailed 
  * @param {Function} onComplete 
  */
-function request(url, params, method) {
+function request(url, params, method, onSuccess, onFailed) {
   console.log('请求url-'+url);
   wx.showLoading({
     title: '加载中',
     duration: 2000
   })
-  return new Promise((resolve,reject) => {
     wx.request({
       url: `${host}${url}`,
       data: params,
@@ -37,17 +36,17 @@ function request(url, params, method) {
       timeout: 6000,
       success: (result) => {
         debugger
-        if (result.statusCode == 200) {
-          resolve(result.data)
+        if (result.statusCode == 200 || result.statusCode == 201) {
+          onSuccess(result.data.result)
         } else {
-          reject(result.data)
+          onFailed(result.data.result)
         }
       },
       fail: (result) => {
-        reject(result.data)
+        debugger
+        onFailed(result.data.result)
       }
     })  
-  })
 }
 
 module.exports = {

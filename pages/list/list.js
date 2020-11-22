@@ -18,43 +18,22 @@ Page({
     http.getRequest('/v1/mark/list', {
       pageSize: _this.data.pageSize,
       pageIndex: _this.data.pageIndex
-    }, 'GET').then((res) => {
-      debugger
+    }, (res) => {
       let data = res.data;
       if(!data){
         return;
       }
+      if (_this.data.pageIndex == 0) {
+        _this.data.markList = [];
+      }
       _this.data.markList.push(...data) ;
-      _this.data.isFinish = data.length == 0 || data.length < _this.data.pageSize;
+      _this.data.isFinish = data.length == 0 || data.length <= _this.data.pageSize;
       
       _this.setData({
         markList: _this.data.markList,
         isFinish: _this.data.isFinish
       });
-    },() => {})
-    // wx.request({
-    //   url: 'http://dudufine.com:3000/v1/mark/list', 
-    //   data: {
-    //     pageSize: _this.data.pageSize,
-    //     pageIndex: _this.data.pageIndex
-    //   },
-    //   header: {
-    //     'content-type': 'application/json' // 默认值
-    //   },
-    //   success (res) {
-    //     let data = res.data.result.data;
-    //     if(!data){
-    //       return;
-    //     }
-    //     _this.data.markList.push(...data) ;
-    //     _this.data.isFinish = data.length == 0 || data.length < _this.data.pageSize;
-       
-    //     _this.setData({
-    //       markList: _this.data.markList,
-    //       isFinish: _this.data.isFinish
-    //     });
-    //   }
-    // })
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -107,9 +86,6 @@ Page({
    */
   onPullDownRefresh: function () {
     let _this = this;
-    // _this.setData({
-    //   pageIndex: _this.data.pageIndex+1,
-    // });
     _this.data.pageIndex=0;
     this.getMarkList();
   },

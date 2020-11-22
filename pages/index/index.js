@@ -7,10 +7,12 @@ Page({
     map: {
       longitude: 0,
       latitude: 0,
+      enableScroll: true,
+      enableZoom: true,
       height: "calc(100% - 66px)",
       width: '100%',
       penHeight: "64px",
-      markers: [],
+      markers: []
     },
     // markers: [],
     maxMarkerIndex: 2,
@@ -34,60 +36,47 @@ Page({
   savemark(longitude, latitude) {
     console.log('请求前');
     var _this = this;
-    wx.request({
-      url: 'http://dudufine.com:3000/v1/mark/add',
-      method: 'POST',
-      data: {
-        shopName: this.data.shopName,
-        category: this.data.category,
-        cost: this.data.cost,
-        remark: this.data.remark,
-        longitude: longitude, 
-        latitude: latitude
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function(res) {
-        console.log('请求成功：'+JSON.stringify(res)); 
-        // wx.navigateTo({
-        //   url: 'pages/list/list'　　// 跳到列表页
-        // })
-        
-        // 收起弹出层显示输入框
-        _this.data.ifShowMark =false;
-        //修改地图大小，解决地图全屏弹出层不能显示
-        if (_this.data.ifShowMark) {
-          _this.data.map.height = "calc(100% - 393px)";
-        }
-        else {
-          _this.data.map.height = "calc(100% - 66px)";
-        }
-        _this.setData({
-          map: _this.data.map,
-          ifShowMark: _this.data.ifShowMark
-        });
-        // _this.getMapHeight();
+    http.postRequest('/v1/mark/add', {
+      shopName: this.data.shopName,
+      category: this.data.category,
+      cost: this.data.cost,
+      remark: this.data.remark,
+      longitude: longitude, 
+      latitude: latitude
+    },(res) => {
+       // 收起弹出层显示输入框
+       debugger
+       _this.data.ifShowMark =false;
+       //修改地图大小，解决地图全屏弹出层不能显示
+       if (_this.data.ifShowMark) {
+         _this.data.map.height = "calc(100% - 393px)";
+       }
+       else {
+         _this.data.map.height = "calc(100% - 66px)";
+       }
+       _this.setData({
+         map: _this.data.map,
+         ifShowMark: _this.data.ifShowMark
+       });
+       // _this.getMapHeight();
 
-        wx.showToast({
-          title:"成功",
-          icon: 'loading...',//图标，支持"success"、"loading" 
-          // image: '/images/tan.png',//自定义图标的本地路径，image 的优先级高于 icon
-          duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
-          mask: false,//是否显示透明蒙层，防止触摸穿透，默认：false 
-          success:function(){},
-          fail:function(){},
-          complete:function(){}
-        })
-      },
-      fail: function(res) {
-        console.log('请求失败：'+JSON.stringify(res));
-        wx.showToast({
-          title:"成功",
-          icon: 'success',//图标，支持"success"、"loading" 
-          duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
-        })
-      },
+       wx.showToast({
+         title:"成功",
+         icon: 'loading...',//图标，支持"success"、"loading" 
+         // image: '/images/tan.png',//自定义图标的本地路径，image 的优先级高于 icon
+         duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+         mask: false,//是否显示透明蒙层，防止触摸穿透，默认：false 
+         success:function(){},
+         fail:function(){},
+         complete:function(){}
+       })
+    }, (res) => {
+      console.log('请求失败：'+JSON.stringify(res));
+      wx.showToast({
+        title:"请求错误，请稍后重试",
+        icon: 'success',//图标，支持"success"、"loading" 
+        duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+      })
     })
   },
   addMarker: function (longitude, latitude) {
@@ -110,7 +99,7 @@ Page({
   addOneMark: function (longitude, latitude) {
     var _this = this;
     _this.data.maxMarkerIndex++;
-    _this.data.markers.push({
+    _this.data.map.markers.push({
       id: _this.data.maxMarkerIndex,
       longitude: longitude,
       latitude: latitude,
@@ -119,7 +108,7 @@ Page({
       height: 32
     });
     _this.setData({
-      markers: _this.data.markers
+      map: _this.data.map
     });
     // record.save(_this.data.markers);
   },
@@ -190,16 +179,27 @@ Page({
       this.mapcontext.getCenterLocation({
         success: function (res) {
           if (res && res.longitude) {
+            _this.data.map.markers[0]={
+              id: 1,
+              longitude: res.longitude,
+              latitude: res.latitude,
+              iconPath: '/images/here.gif',
+              width: 64,
+              height: 64
+            }
             _this.setData({
-              'markers[1]': {
-                id: 1,
-                longitude: res.longitude,
-                latitude: res.latitude,
-                iconPath: '/images/here.gif',
-                width: 64,
-                height: 64
-              }
-            });
+              map: _this.data.map
+            })
+            // _this.setData({
+            //   map.markers[1]: {
+            //     id: 1,
+            //     longitude: res.longitude,
+            //     latitude: res.latitude,
+            //     iconPath: '/images/here.gif',
+            //     width: 64,
+            //     height: 64
+            //   }
+            // });
           }
         }
       });
@@ -217,48 +217,21 @@ Page({
   // 获取个人标记列表
   getMarkList() {
     var _this = this;
-    // http.getRequest('/v1/mark/list', {
-    //   pageSize: 10,
-    //   pageIndex: 0
-    // },)
     http.getRequest('/v1/mark/list', {
       pageSize: 10,
       pageIndex: 0
-    }, 'GET').then((res) => {
-      let data = res.data.result.data;
+    }, (res) => {
+      let data = res.data;
         if(!data){
           return;
         }
         _this.data.map.markers.push(...data) ;
         console.log(_this.data.map.markers);
         _this.setData({
-          markers: _this.data.map.markers
+          map: _this.data.map
         });
-    }, (res) => {
-
     })
-    // wx.request({
-    //   url: 'http://dudufine.com:3000/v1/mark/list', 
-    //   data: {
-    //     pageSize: 10,
-    //     pageIndex: 0
-    //   },
-    //   success (res) {
-    //     let data = res.data.result.data;
-    //     if(!data){
-    //       return;
-    //     }
-    //     _this.data.map.markers.push(...data) ;
-    //     console.log(_this.data.map.markers);
-    //     _this.setData({
-    //       markers: _this.data.map.markers
-    //     });
-    //     // _this.setData({
-    //     //   markList: _this.data.markList,
-    //     //   isFinish: _this.data.isFinish
-    //     // });
-    //   }
-    // })
+   
   },
   onLoad: function () {
     var _this = this;
@@ -267,7 +240,6 @@ Page({
       type: 'gcj02',
       success: function (res) {
         _this.mapcontext = wx.createMapContext("qqMap");
-
         if (res && res.longitude) {
           // record.get(function (markers) {
           //   if (!markers) {
@@ -284,12 +256,11 @@ Page({
               width: 32,
               height: 32
             };
-            _this.data.map.markers.push(tempMarkers)
+            _this.data.map.markers[0]=tempMarkers
             _this.setData({
               map: _this.data.map,
               // markers: markers
             });
-
             _this.getMarkList()
           // });
         }
