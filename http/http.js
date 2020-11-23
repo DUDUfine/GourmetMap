@@ -2,12 +2,12 @@ var app = getApp();
 // 封装http请求 TODO
 var host = 'http://dudufine.com:3000';
 
-function getRequest(url, params, onSuccess, onFailed, onComplete) {
-  request(url, params, 'GET', onSuccess, onFailed, onComplete)
+function getRequest(url, params) {
+  request(url, params, 'GET')
 }
 
-function postRequest(url, params, onSuccess, onFailed, onComplete) {
-  request(url, params, 'POST', onSuccess, onFailed, onComplete)
+function postRequest(url, params) {
+  request(url, params, 'POST')
 }
 
 /**
@@ -15,9 +15,6 @@ function postRequest(url, params, onSuccess, onFailed, onComplete) {
  * @param {string} url 
  * @param {object} params 
  * @param {string} method
- * @param {Function} onSuccess 
- * @param {Function} onFailed 
- * @param {Function} onComplete 
  */
 function request(url, params, method, onSuccess, onFailed) {
   console.log('请求url-'+url);
