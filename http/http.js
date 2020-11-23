@@ -2,12 +2,12 @@ var app = getApp();
 // 封装http请求 TODO
 var host = 'http://dudufine.com:3000';
 
-function getRequest(url, params) {
-  request(url, params, 'GET')
+function getRequest(url, params, onSuccess, onFailed) {
+  request(url, params, 'GET',onSuccess, onFailed)
 }
 
-function postRequest(url, params) {
-  request(url, params, 'POST')
+function postRequest(url, params, onSuccess, onFailed) {
+  request(url, params, 'POST', onSuccess, onFailed)
 }
 
 /**
@@ -32,7 +32,7 @@ function request(url, params, method, onSuccess, onFailed) {
       method: method,
       timeout: 6000,
       success: (result) => {
-        debugger
+        
         if (result.statusCode == 200 || result.statusCode == 201) {
           onSuccess(result.data.result)
         } else {
@@ -40,8 +40,10 @@ function request(url, params, method, onSuccess, onFailed) {
         }
       },
       fail: (result) => {
-        debugger
-        onFailed(result.data.result)
+        if (onFailed) {
+          onFailed(result.data.result)
+        }
+        
       }
     })  
 }

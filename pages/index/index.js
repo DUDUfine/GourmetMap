@@ -14,7 +14,7 @@ Page({
       penHeight: "64px",
       markers: []
     },
-    // markers: [],
+    markers: [],
     maxMarkerIndex: 2,
     curRemark: {
       longitude: "",
@@ -99,7 +99,7 @@ Page({
   addOneMark: function (longitude, latitude) {
     var _this = this;
     _this.data.maxMarkerIndex++;
-    _this.data.map.markers.push({
+    _this.data.markers.push({
       id: _this.data.maxMarkerIndex,
       longitude: longitude,
       latitude: latitude,
@@ -108,7 +108,7 @@ Page({
       height: 32
     });
     _this.setData({
-      map: _this.data.map
+      markers: _this.data.markers
     });
     // record.save(_this.data.markers);
   },
@@ -179,7 +179,7 @@ Page({
       this.mapcontext.getCenterLocation({
         success: function (res) {
           if (res && res.longitude) {
-            _this.data.map.markers[0]={
+            _this.data.markers[0]={
               id: 1,
               longitude: res.longitude,
               latitude: res.latitude,
@@ -188,18 +188,8 @@ Page({
               height: 64
             }
             _this.setData({
-              map: _this.data.map
+              markers: _this.data.markers
             })
-            // _this.setData({
-            //   map.markers[1]: {
-            //     id: 1,
-            //     longitude: res.longitude,
-            //     latitude: res.latitude,
-            //     iconPath: '/images/here.gif',
-            //     width: 64,
-            //     height: 64
-            //   }
-            // });
           }
         }
       });
@@ -226,7 +216,7 @@ Page({
           return;
         }
         _this.data.map.markers.push(...data) ;
-        console.log(_this.data.map.markers);
+
         _this.setData({
           map: _this.data.map
         });
@@ -241,10 +231,7 @@ Page({
       success: function (res) {
         _this.mapcontext = wx.createMapContext("qqMap");
         if (res && res.longitude) {
-          // record.get(function (markers) {
-          //   if (!markers) {
-          //     markers = []
-          //   }
+
             _this.data.map.longitude = res.longitude;
             _this.data.map.latitude = res.latitude;
               //当前位置
@@ -256,10 +243,9 @@ Page({
               width: 32,
               height: 32
             };
-            _this.data.map.markers[0]=tempMarkers
+            _this.data.markers[0]=tempMarkers
             _this.setData({
-              map: _this.data.map,
-              // markers: markers
+              markers: _this.data.markers,
             });
             _this.getMarkList()
           // });

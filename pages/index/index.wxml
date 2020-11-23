@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <view style="height:100%">
   <map id="qqMap" longitude="{{map.longitude}}" latitude="{{map.latitude}}" 
-  style='width:{{map.width}};height:{{map.height}};' scale='18' markers='{{map.markers}}' bindregionchange='bindregionchange' enable-zoom='{{map.enableZoom}}'
+  style='width:{{map.width}};height:{{map.height}};' scale='18' markers='{{markers}}' bindregionchange='bindregionchange' enable-zoom='{{map.enableoom}}'
       enable-scroll='{{map.enableScroll}}'>
     <!-- <cover-image src="../../images/here.gif" style=" position:absolute;width:64px;height:64px;padding-left:calc(50% - 10px);padding-top:{{map.penHeight}}"/> -->
   </map>
