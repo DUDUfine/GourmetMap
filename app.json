@@ -42,7 +42,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "diglog": "components/diglog/diglog"
+    
   },
   "permission": {
     "scope.userLocation": {

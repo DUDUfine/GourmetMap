@@ -16,6 +16,10 @@ Page({
     },
     markers: [],
     maxMarkerIndex: 2,
+    tempCurRemark: {
+      longitude: "",
+      latitude: ""
+    },
     curRemark: {
       longitude: "",
       latitude: ""
@@ -45,7 +49,6 @@ Page({
       latitude: latitude
     },(res) => {
        // 收起弹出层显示输入框
-       debugger
        _this.data.ifShowMark =false;
        //修改地图大小，解决地图全屏弹出层不能显示
        if (_this.data.ifShowMark) {
@@ -99,7 +102,7 @@ Page({
   addOneMark: function (longitude, latitude) {
     var _this = this;
     _this.data.maxMarkerIndex++;
-    _this.data.markers.push({
+    _this.data.map.markers.push({
       id: _this.data.maxMarkerIndex,
       longitude: longitude,
       latitude: latitude,
@@ -108,7 +111,7 @@ Page({
       height: 32
     });
     _this.setData({
-      markers: _this.data.markers
+      'map.markers': _this.data.map.markers
     });
     // record.save(_this.data.markers);
   },
@@ -179,7 +182,17 @@ Page({
       this.mapcontext.getCenterLocation({
         success: function (res) {
           if (res && res.longitude) {
-            _this.data.markers[0]={
+            if (_this.data.tempCurRemark.longitude == res.longitude  && _this.data.tempCurRemark.latitude==res.latitude) {
+              return ;
+            } 
+            debugger
+            _this.setData({
+                tempCurRemark: {
+                  longitude: res.longitude,
+                  latitude: res.latitude,
+                }
+              })
+            _this.data.map.markers[0]={
               id: 1,
               longitude: res.longitude,
               latitude: res.latitude,
@@ -188,7 +201,7 @@ Page({
               height: 64
             }
             _this.setData({
-              markers: _this.data.markers
+              'map.markers': _this.data.map.markers
             })
           }
         }
@@ -231,21 +244,30 @@ Page({
       success: function (res) {
         _this.mapcontext = wx.createMapContext("qqMap");
         if (res && res.longitude) {
-
+          debugger
             _this.data.map.longitude = res.longitude;
             _this.data.map.latitude = res.latitude;
+            // 标记位置
+            _this.data.map.markers.push({
+              id: 0,
+              longitude: res.longitude,
+              latitude: res.latitude,
+              iconPath: '/images/here.gif',
+              width: 64,
+              height: 64
+            })
               //当前位置
             let tempMarkers = {
-              id: 0,
+              id: 1,
               longitude: res.longitude,
               latitude: res.latitude,
               iconPath: '/images/navi_s.png',
               width: 32,
               height: 32
             };
-            _this.data.markers[0]=tempMarkers
+            _this.data.map.markers.push(tempMarkers)
             _this.setData({
-              markers: _this.data.markers,
+              map: _this.data.map,
             });
             _this.getMarkList()
           // });
