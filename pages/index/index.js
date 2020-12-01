@@ -236,15 +236,33 @@ Page({
     })
    
   },
+  login(code) {
+    http.postRequest('/v1/user/login', {
+      code: code
+    },(res) => { 
+      console.log('登录响应');
+      
+    },(res) => {
+
+    })
+  },
   onLoad: function () {
     var _this = this;
+    wx.login({
+      timeout:10000,
+      success: (res) => {console.log('成功')
+      console.log(res);
+        this.login(res.code)
+      ;}, 
+      fail: (res) => {console.log('失败');},
+      complete: (res) => {console.log('最终');},
+    })
     this.selectQuery = wx.createSelectorQuery()
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
         _this.mapcontext = wx.createMapContext("qqMap");
         if (res && res.longitude) {
-          debugger
             _this.data.map.longitude = res.longitude;
             _this.data.map.latitude = res.latitude;
             // 标记位置
