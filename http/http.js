@@ -27,7 +27,8 @@ function request(url, params, method, onSuccess, onFailed) {
       data: params,
       dataType: 'json',
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json', // 默认值
+        'token': wx.getStorageSync('token')||''
       },
       method: method,
       timeout: 6000,

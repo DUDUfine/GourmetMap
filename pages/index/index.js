@@ -241,6 +241,8 @@ Page({
       code: code
     },(res) => { 
       console.log('登录响应');
+       // 保存token
+      wx.setStorageSync('token', res)
       
     },(res) => {
 
@@ -251,9 +253,9 @@ Page({
     wx.login({
       timeout:10000,
       success: (res) => {console.log('成功')
-      console.log(res);
-        this.login(res.code)
-      ;}, 
+        this.login(res.code);
+       
+      }, 
       fail: (res) => {console.log('失败');},
       complete: (res) => {console.log('最终');},
     })
